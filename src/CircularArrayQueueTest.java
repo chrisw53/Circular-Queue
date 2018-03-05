@@ -1,4 +1,4 @@
-import java.util.*;
+/*import java.util.*;
 import junit.framework.TestCase;
 
 public class CircularArrayQueueTest extends TestCase
@@ -153,4 +153,4 @@ public class CircularArrayQueueTest extends TestCase
                     queue.getCapacityLeft() );
         }
     }
-}
+}*/
