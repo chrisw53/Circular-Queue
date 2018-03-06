@@ -11,16 +11,15 @@ public class CircularArrayQueue implements MyQueue {
     public void enqueue(int in) {
         if (getCapacityLeft() == 0) {
             int[] resizeArr = new int[intQueue.length * 2];
-
             System.arraycopy(intQueue, queueHead, resizeArr, 0, intQueue.length - queueTail);
             System.arraycopy(intQueue, 0, resizeArr, intQueue.length - queueTail, queueHead);
-            queueHead = 0;
             queueTail = intQueue.length;
             intQueue = resizeArr;
+            queueHead = 0;
         }
 
-        queueTail = (queueTail + 1) % intQueue.length;
         intQueue[queueTail] = in;
+        queueTail = (queueTail + 1) % intQueue.length;
         elementCount++;
 
     }
@@ -31,8 +30,8 @@ public class CircularArrayQueue implements MyQueue {
         if (isEmpty()) {
             throw new NoSuchElementException();
         } else {
-            queueHead = (queueHead + 1) % intQueue.length;
             out = intQueue[queueHead];
+            queueHead = (queueHead + 1) % intQueue.length;
             elementCount--;
         }
         return out;
