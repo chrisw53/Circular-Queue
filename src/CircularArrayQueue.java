@@ -2,20 +2,21 @@ import java.util.NoSuchElementException;
 
 public class CircularArrayQueue implements MyQueue {
 
-    /*
+    /**
      Pointers @queueHead and @queue tail track structure of queue
-     @intQueue tracks data, does not look at order
-     @elementCount tracks number of elements in constant time
+     intQueue: tracks data, does not look at order
+     elementCount: tracks number of elements in constant time
      */
     private int[] intQueue = new int[5];
     private int queueHead = 0;
     private int queueTail = 0;
     private int elementCount = 0;
 
-    @Override
-    /*
-     This method appends a new value to the front of the list and updates the tail pointer
+    /**
+     This method appends a new value to the front of the list and
+     updates the tail pointer
      */
+    @Override
     public void enqueue(int in) {
         // Check for capacity left looks if resize is required.
         if (getCapacityLeft() == 0) {
@@ -39,54 +40,50 @@ public class CircularArrayQueue implements MyQueue {
 
     }
 
-    @Override
-    /*
-     Method removes least recent value from the head pointer, allowing for first in first out structure.
+    /**
+     Method removes least recent value from the head pointer, allowing
+     for first in first out structure.
      */
+    @Override
     public int dequeue() throws NoSuchElementException {
-        int out = 0;
+        int out;
         // Check if an element can be removed to prevent underflow error
         if (isEmpty()) {
             throw new NoSuchElementException();
         } else {
-            // Code for removing the least recent value from the queue and update the head pointer
+            // Code for removing the least recent value from the queue and
+            // update the head pointer
             out = intQueue[queueHead];
             queueHead = (queueHead + 1) % intQueue.length;
             elementCount--;
         }
-        // Return statement prints any value found from the location of the head pointer if error not thrown
+        // Return statement prints any value found from the location
+        // of the head pointer if error not thrown
         return out;
     }
 
-    @Override
-    /*
+    /**
      Accessor method returns number of elements in the queue
      */
+    @Override
     public int noItems() {
         return elementCount;
     }
 
-    @Override
-    /*
+    /**
      Method checks if queue is empty by looking at the number of elements in the queue
      */
+    @Override
     public boolean isEmpty() {
-        boolean listEmpty = false;
-
-        // Conditional statement allows for boolean result to be decided
-        if (elementCount == 0) {
-            listEmpty = true;
-        } else {
-            listEmpty = false;
-        }
-        return listEmpty;
+        return (elementCount == 0);
     }
 
-    /*
+    /**
      Method returns number of spaces left in queue
      */
     public int getCapacityLeft() {
-        // Calculation taken from the max number of elements take the number of elements to return unallocated space
+        // Calculation taken from the max number of elements take the
+        // number of elements to return unallocated space
         return intQueue.length - noItems();
     }
 }
