@@ -73,6 +73,7 @@ public class CircularArrayRingTest extends TestCase  {
         }
         Iterator<Integer> it = ring.iterator();
         int i = 999;
+        System.out.println("1");
         while (it.hasNext()) {
             assertEquals(i, (int) it.next());
             --i;
@@ -80,6 +81,7 @@ public class CircularArrayRingTest extends TestCase  {
         // Try again just for luck
         it = ring.iterator();
         i = 999;
+        System.out.println("2");
         while (it.hasNext()) {
             assertEquals(i, (int) it.next());
             --i;
@@ -87,12 +89,14 @@ public class CircularArrayRingTest extends TestCase  {
         // Be a bit more vicious
         it = ring.iterator();
         i = 999;
+        System.out.println("3");
         while (it.hasNext()) {
             it.hasNext();  // Should do nothing
             assertEquals(i, (int) it.next());
             --i;
         }
         // Test end condition
+        System.out.println("4");
         boolean exceptionThrown = false;
         try {
             it.next();
@@ -100,10 +104,12 @@ public class CircularArrayRingTest extends TestCase  {
             exceptionThrown = true;
         }
         // calling next() when there should be no next
+        System.out.println("5");
         assertTrue("Should have thrown an exception", exceptionThrown);
 
         // Test enhanced for loop
         i = 999;
+        System.out.println("6");
         for (Integer element: ring) {
             assertEquals(i, (int) element);
             --i;
