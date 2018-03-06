@@ -23,10 +23,22 @@ public class CircularArrayQueue implements MyQueue {
             int[] resizeArr = new int[intQueue.length * 2];
             /*
              Array is copied into two sections, head to end and beginning to tail.
-             As array is circular order of values must be maintained by accounting for head and tail pointers
+             As array is circular order of values must be maintained by accounting
+             for head and tail pointers
               */
-            System.arraycopy(intQueue, queueHead, resizeArr, 0, intQueue.length - queueTail);
-            System.arraycopy(intQueue, 0, resizeArr, intQueue.length - queueTail, queueHead);
+            System.arraycopy(
+                    intQueue,
+                    queueHead,
+                    resizeArr,
+                    0,
+                    intQueue.length - queueTail
+            );
+            System.arraycopy(
+                    intQueue,
+                    0,
+                    resizeArr,
+                    intQueue.length - queueTail, queueHead
+            );
             // Head and tail are updated to accommodate the new array
             queueTail = intQueue.length;
             intQueue = resizeArr;
