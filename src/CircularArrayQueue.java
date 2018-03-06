@@ -10,7 +10,7 @@ public class CircularArrayQueue implements MyQueue {
     public void enqueue(int in) {
         if (getCapacityLeft() != 0) {
             if (queueTail + 1 > queueSize) {
-                queueTail %= queueSize;
+                queueTail = (queueTail + 1) % queueSize;
                 intQueue[queueTail] = in;
             } else {
                 queueTail += 1;
@@ -25,7 +25,7 @@ public class CircularArrayQueue implements MyQueue {
         if (noItems() != 0) {
             intQueue[queueHead] = headValue;
             if (queueHead + 1 > queueSize) {
-                queueHead %= queueSize;
+                queueHead = (queueHead + 1) % queueSize;
             } else {
                 queueHead += 1;
             }
