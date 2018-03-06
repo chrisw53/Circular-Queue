@@ -1,50 +1,54 @@
 import java.util.NoSuchElementException;
 
 public class CircularArrayQueue implements MyQueue {
-    private int queueSize = 1;
-    private int[] intQueue = new int[queueSize];
+
+    private int[] intQueue = new int[5];
     private int queueHead = 0;
     private int queueTail = 0;
+    private int elementCount = 0;
 
     @Override
     public void enqueue(int in) {
-        if (getCapacityLeft() != 0) {
-            if (queueTail + 1 > queueSize) {
-                queueTail = (queueTail + 1) % queueSize;
-                intQueue[queueTail] = in;
-            } else {
-                queueTail += 1;
-                intQueue[queueTail] = in;
-            }
+        if (getCapacityLeft() == 0) {
+            int[] resizeArr = new int[intQueue.length * 2];
+
+            System.arraycopy(intQueue, queueHead, resizeArr, 0, intQueue.length - queueTail);
+            System.arraycopy(intQueue, 0, resizeArr, intQueue.length - queueTail, queueHead);
+            queueHead = 0;
+            queueTail = intQueue.length;
+            intQueue = resizeArr;
         }
+
+        queueTail = (queueTail + 1) % intQueue.length;
+        intQueue[queueTail] = in;
+        elementCount++;
+
     }
 
     @Override
     public int dequeue() throws NoSuchElementException {
-        int headValue = 0;
-        if (noItems() != 0) {
-            intQueue[queueHead] = headValue;
-            if (queueHead + 1 > queueSize) {
-                queueHead = (queueHead + 1) % queueSize;
-            } else {
-                queueHead += 1;
-            }
-        } else {
+        int out = 0;
+        if (isEmpty()) {
             throw new NoSuchElementException();
+        } else {
+            queueHead = (queueHead + 1) % intQueue.length;
+            out = intQueue[queueHead];
+            elementCount--;
         }
-        return headValue;
+        return out;
     }
 
     @Override
     public int noItems() {
-        return queueSize - getCapacityLeft();
+        return elementCount;
+        //return Math.abs(Math.abs(intQueue.length - queueHead) - Math.abs(intQueue.length - queueTail));
     }
 
     @Override
     public boolean isEmpty() {
         boolean listEmpty = false;
 
-        if (queueHead == queueTail) {
+        if (elementCount == 0) {
             listEmpty = true;
         } else {
             listEmpty = false;
@@ -53,13 +57,6 @@ public class CircularArrayQueue implements MyQueue {
     }
 
     public int getCapacityLeft() {
-        int spaceLeft = 0;
-
-        for (int i = 0; i < queueSize; i++) {
-            if (intQueue[i] == 0) {
-                spaceLeft++;
-            }
-        }
-        return spaceLeft;
+        return intQueue.length - noItems();
     }
 }
