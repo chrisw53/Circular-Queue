@@ -56,7 +56,7 @@ public class CircularArrayQueue implements MyQueue {
         int spaceLeft = 0;
 
         for (int i = 0; i < queueSize; i++) {
-            if (intQueue[i] != 0) {
+            if (intQueue[i] == 0) {
                 spaceLeft++;
             }
         }
