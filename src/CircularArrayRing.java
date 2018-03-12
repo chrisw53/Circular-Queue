@@ -87,19 +87,27 @@ public class CircularArrayRing<T> extends AbstractCollection implements Ring {
      * the array ring backwards from the last added element
      */
     public Iterator<T> iterator() {
-        // This reverses the list
-        List myList = Arrays.asList(myArray);
+        // Temporary storage variable
+        T[] tempArray = (T[])new Object[myArray.length];
 
-        /*
-        This checks if the list has already been
-        reversed
-        */
-        if (!reversed) {
-            Collections.reverse(myList);
-            reversed = true;
+        // Grabs a new copy of the headIndex to avoid pointer errs
+        int helperHeadIndex = new Integer(headIndex);
+
+        // Reverses myArray from the headPointer onward and output into tempArray
+        for (int i = 0; i < myArray.length; i++) {
+            tempArray[i] = myArray[helperHeadIndex];
+            if (helperHeadIndex > 0) {
+                helperHeadIndex--;
+            } else {
+                helperHeadIndex = myArray.length - 1;
+            }
         }
 
+        // Cast tempArray as a list so .iterator() can be called on it
+        List myList = Arrays.asList(tempArray);
+        // Create a new iterator from tempArray list
         Iterator<T> myIterator = myList.iterator();
+
         return myIterator;
     }
 
